@@ -1,0 +1,33 @@
+#!/usr/bin/python
+import sys
+
+def factorize(num):
+    for j in range(2, int(num**0.5) + 1):
+        if num % j == 0:
+            larger_factor = num // j
+            return j, larger_factor
+    return None
+
+def p_f(path):
+    with open(path, 'r') as file:
+        n = [int(line.strip()) for line in file.readlines()]
+    return n
+
+def main(path):
+    n = p_f(path)
+
+    for num in n:
+        factors = factorize(num)
+        if factors:
+            print(f"{num}={factors[1]}*{factors[0]}")
+        else:
+            print(f"Unable to factorize {num}")
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python factors.py <file>")
+        sys.exit(1)
+
+    path = sys.argv[1]
+    main(path)
+
