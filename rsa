@@ -1,33 +1,37 @@
 #!/usr/bin/python3
-import math
 import sys
 
-def factorize(n):
-    factors = []
-    divisor = 2
-    
-    while n > 1:
-        while n % divisor == 0:
-            factors.append(divisor)
-            n //= divisor
-        divisor += 1
-    
-    return factors
+def _prime(n):
+    if n < 2:
+        return False
+    for j in range(2, int(n**0.5) + 1):
+        if n % j == 0:
+            return False
+    return True
 
-def main(filename):
-    with open(filename, 'r') as file:
-        for line in file:
-            n = int(line.strip())
-            factors = factorize(n)
-            # Sort the factors in descending order
-            factors.sort(reverse=True)
-            print(f"{n} =", "*".join(map(str, factors)))
+def factorize(n):
+    for j in range(2, int(n**0.5) + 1):
+        if n % j == 0 and _prime(j):
+            larger = n // j
+            if _prime(larger):
+                return j, larger
+    return None
+
+def main(path_f):
+    with open(path_f, 'r') as file:
+        n = int(file.read().strip())
+
+    fac = factorize(n)
+    if fac:
+        print(f"{n}={fac[1]}*{fac[0]}")
+    else:
+        print(f"Unable to factorize {n} into prime numbers")
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python3 script.py input_filename")
+        print("Usage: python rsa.py <file>")
         sys.exit(1)
-    
-    input_filename = sys.argv[1]
-    main(input_filename)
+
+    path_f = sys.argv[1]
+    main(path_f)
 
