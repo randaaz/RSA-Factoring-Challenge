@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import sys
 
+
 def _prime(n):
     if n < 2:
         return False
@@ -9,6 +10,7 @@ def _prime(n):
             return False
     return True
 
+
 def factorize(n):
     for j in range(2, int(n**0.5) + 1):
         if n % j == 0 and _prime(j):
@@ -16,6 +18,7 @@ def factorize(n):
             if _prime(larger):
                 return j, larger
     return None
+
 
 def main(path_f):
     with open(path_f, 'r') as file:
@@ -27,6 +30,7 @@ def main(path_f):
     else:
         print(f"Unable to factorize {n} into prime numbers")
 
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python rsa.py <file>")
@@ -34,4 +38,3 @@ if __name__ == "__main__":
 
     path_f = sys.argv[1]
     main(path_f)
-
